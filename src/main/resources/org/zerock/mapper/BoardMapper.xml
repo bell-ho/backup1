@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.BoardMapper">
+
+    <!-- 자유게시판 -->
+    <select id="getFreeList" resultType="org.zerock.domain.BoardVO">
+	<![CDATA[
+        select board_No , board_Title , board_Content,  m.mem_Id , m.mem_Nickname , board_Hit , board_Regdate , board_Replycnt
+        from board b , member m
+        where board_Kinds = 1 and m.mem_Id = b.mem_Id and board_No > 0
+        ]]>
+	</select>
+
+    <!-- 후기게시판 -->
+    <select id="getTripList" resultType="org.zerock.domain.BoardVO">
+	<![CDATA[
+        select board_No , board_Title , board_Content, m.mem_Id , mem_Nickname , board_Hit , board_Regdate , board_Replycnt
+        from board b , member m
+        where m.mem_Id = b.mem_Id and board_Kinds = 0 and board_No > 0
+        ]]>
+	</select>
+
+    <!-- 내가 쓴글 게시판 -->
+    <select id="getMyList" resultType="org.zerock.domain.BoardVO">
+	<![CDATA[
+        select board_No , board_Title , board_Content, m.mem_Id , mem_Nickname , board_Hit , board_Regdate , board_Replycnt
+        from board b , member m
+        where m.mem_Id = b.mem_Id and m.mem_Nickname=#{memNickname} and board_No > 0
+        ]]>
+	</select>
+
+    <insert id="insertSelectkey">
+
+        <selectKey keyProperty="boardNo" order="BEFORE"
+                   resultType="long">
+            select seq_board.nextval from dual
+        </selectKey>
+
+        insert into board(
+        board_No,
+        board_Kinds,
+        board_Title,
+        board_Content,
+        mem_Id,
+        board_Regdate
+        )
+        values (
+        #{boardNo},
+        #{boardKinds},
+        #{boardTitle},
+        #{boardContent},
+        #{memId},
+        sysdate
+        )
+    </insert>
+
+    <select id="read" resultType="org.zerock.domain.BoardVO">
+        select * from board b , member m
+        where b.mem_Id = m.mem_Id and board_No = #{boardNo}
+    </select>
+
+    <delete id="delete">
+        delete from board where board_No = #{boardNo}
+    </delete>
+
+    <update id="update">
+        update board set
+                         board_Kinds = #{boardKinds},
+                         board_Title = #{boardTitle},
+                         board_Content = #{boardContent},
+                         board_Updatedate = sysdate
+        where board_No = #{boardNo}
+    </update>
+
+    <update id="updateReplyCnt">
+        update board set
+            board_Replycnt = board_Replycnt + #{amount}
+        where board_No = #{boardNo}
+    </update>
+
+    <delete id="deleteMember">
+        delete from board where mem_Id = #{memId}
+    </delete>
+
+    <update id="updateBoardhit" parameterType="Long">
+        update board set board_Hit = board_Hit +1 where board_No = #{boardNo}
+    </update>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!-- 	토큰 안하는 설정 -->
+    <security:http pattern="/resources/**" security="none"/>
+    <security:http pattern="/ajax/**" security="none"/>
+
+    <security:http>
+
+        <security:intercept-url pattern="/ajax/**" access="permitAll"/>
+
+        <security:intercept-url pattern="/insertMember**" access="permitAll"/>
+
+        <security:intercept-url pattern="/" access="permitAll"/>
+
+        <security:intercept-url pattern="/board/registerBoard" access="hasRole('ROLE_MEMBER')"/>
+
+        <security:intercept-url pattern="/board/modifyBoard" access="hasRole('ROLE_MEMBER')"/>
+        <!-- 여기까지 권한 주는 시큐리티 : 순서가 중요함 -->
+
+        <security:form-login login-page="/MytripLogin"/>
+
+        <security:logout logout-url="/logout" logout-success-url="/" invalidate-session="true"/>
+
+        <security:headers>
+            <security:frame-options disabled="true"/>
+        </security:headers>
+
+    </security:http>
+
+
+    <security:authentication-manager>
+
+        <security:authentication-provider>
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query="select mem_Id as username, mem_Password as password, enable  from member WHERE mem_Id=?"
+                                        authorities-by-username-query="select mem_Id as username , role as authority  from member WHERE mem_Id=?"/>
+            <!--시큐리티에 있는 이름으로 바꿔줌 -->
+
+            <security:password-encoder ref="bcryptPasswordEncoder"/>
+
+        </security:authentication-provider>
+
+    </security:authentication-manager>
+
+</beans>
