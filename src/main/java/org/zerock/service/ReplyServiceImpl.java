@@ -15,10 +15,10 @@ import java.util.List;
 @Service
 public class ReplyServiceImpl implements ReplyService {
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private ReplyMapper mapper;
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private BoardMapper boardMapper;
 
     @Transactional

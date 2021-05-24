@@ -10,6 +10,7 @@
 <%@ page import="org.apache.commons.fileupload.FileItem"%>
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+
 <%
 String return1="";
 String return2="";
@@ -39,7 +40,7 @@ if (ServletFileUpload.isMultipartContent(request)){
         		String folder = str.replace("-", File.separator);
                 String path = defaultPath +"resources/upload/"+folder+"/";
                 String viewPath = "resources/upload/"+folder+"/";
-                System.out.println(path);
+                System.out.println("path : "+path);
                 File file = new File(path);
                 //디렉토리 존재하지 않을경우 디렉토리 생성
                 if(!file.exists()) {
@@ -60,7 +61,8 @@ if (ServletFileUpload.isMultipartContent(request)){
                 os.flush();
                 os.close();
                 ///////////////// 서버에 파일쓰기 /////////////////
-                return3 += "&bNewLine=true&sFileName="+name+"&sFileURL=http://localhost:8080/"+viewPath+realname;
+                int port = request.getServerPort();
+                return3 += "&bNewLine=true&sFileName="+name+"&sFileURL=http://localhost:"+port+"/"+viewPath+realname;
                 System.out.println(realname);
             }else {
                 return3 += "&errstr=error";

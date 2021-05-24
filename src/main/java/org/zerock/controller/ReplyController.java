@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 public class ReplyController {
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private ReplyService service;
 
     //	/reply/insert를post방식으로 요청

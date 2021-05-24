@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private UploadFileMapper mapper;
 
     @Override

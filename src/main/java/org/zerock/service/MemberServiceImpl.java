@@ -15,19 +15,19 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private MemberMapper mapper;
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private BCryptPasswordEncoder encoder;
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private ReplyService replyService;
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private UploadFileService uploadService;
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private BoardService boardService;
 
     @Override

@@ -16,13 +16,13 @@ import java.util.List;
 @Service
 public class BoardServiceImpl implements BoardService {
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private BoardMapper mapper;
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private ReplyMapper replyMapper;
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private UploadFileMapper uploadMapper;
 
     @Override

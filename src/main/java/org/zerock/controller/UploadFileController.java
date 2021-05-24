@@ -13,7 +13,7 @@ import org.zerock.service.UploadFileService;
 @Controller
 public class UploadFileController {
 
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private UploadFileService uploadFileService;
 
     @RequestMapping("/photo/{key}")

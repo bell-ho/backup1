@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.UploadFileVO;
 import org.zerock.service.BoardService;
-import org.zerock.service.ReplyService;
 import org.zerock.service.UploadFileService;
 
 import javax.servlet.http.Cookie;
@@ -31,13 +30,11 @@ import java.util.regex.Pattern;
 @RequestMapping("/board/*")
 
 public class BoardController {
-    @Setter(onMethod_ = @Autowired)
+
+    @Autowired
     private BoardService boardService;
 
-    @Setter(onMethod_ = @Autowired)
-    private ReplyService replyService;
-
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private UploadFileService uploadFileService;
 
     @GetMapping("/listFreeBoard") // 자유게시판

@@ -1,7 +1,7 @@
 package org.zerock.controller;
 
 import com.google.gson.Gson;
-import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +19,10 @@ import java.io.*;
 import java.security.Principal;
 import java.util.UUID;
 
+@Log4j
 @Controller
 public class MemberController {
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private MemberService service;
 
     @PostMapping("/insertMember")
@@ -48,7 +49,7 @@ public class MemberController {
             String ext = uplod.getOriginalFilename().substring(uplod.getOriginalFilename().lastIndexOf("."));
 
             String realname = UUID.randomUUID().toString() + ext;
-            System.out.println(realname);
+            System.out.println("realname : " + realname);
 
             ///////////////// 서버에 파일쓰기 /////////////////
             InputStream is = uplod.getInputStream();
@@ -66,7 +67,8 @@ public class MemberController {
             os.flush();
             os.close();
 
-            vo.setMemImg("http://localhost:8080/resources/img/" + realname);
+            int port = request.getServerPort();
+            vo.setMemImg("http://localhost:" + port + "/resources/img/" + realname);
             service.insert(vo);
             return "redirect:main";
         }
@@ -143,11 +145,11 @@ public class MemberController {
     }
 
     @PostMapping("/memImgupdate")
-    public String memImgupdate(Model model, MemberVO vo, MultipartHttpServletRequest mut, HttpServletRequest request)
-            throws IOException {
+    public String memImgupdate(Model model, MemberVO vo, MultipartHttpServletRequest mut, HttpServletRequest request) throws IOException {
         MultipartFile uplod = mut.getFile("file");
+        log.info("upload : " + uplod);
         String path = request.getSession().getServletContext().getRealPath("/") + "resources\\img\\";
-        System.out.println(path);
+        log.info("path : " + path);
         File file = new File(path);
         // 디렉토리 존재하지 않을경우 디렉토리 생성
         if (!file.exists()) {
@@ -156,7 +158,7 @@ public class MemberController {
 
         String ext = uplod.getOriginalFilename().substring(uplod.getOriginalFilename().lastIndexOf("."));
         String realname = UUID.randomUUID().toString() + ext;
-        System.out.println(realname);
+        log.info("realname : " + realname);
 
         ///////////////// 서버에 파일쓰기 /////////////////
         InputStream is = uplod.getInputStream();
@@ -167,19 +169,20 @@ public class MemberController {
             os.write(b, 0, numRead);
         }
 
-        if (is != null)
+        if (is != null) {
             is.close();
+        }
         os.flush();
         os.close();
 
-        vo.setMemImg("http://localhost:8080/resources/img/" + realname);
-        System.out.println(vo);
+        int port = request.getServerPort();
+        vo.setMemImg("http://localhost:" + port + "/resources/img/" + realname);
 
         if (service.memImgUpdate(vo) < 1) {
             model.addAttribute("result", "error");
         }
 
-        model.addAttribute("result", "seccess");
+        model.addAttribute("result", "success");
         return "redirect:main";
     }
 }

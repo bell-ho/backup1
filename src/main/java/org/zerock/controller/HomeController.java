@@ -21,7 +21,7 @@ import java.util.Locale;
 @Log4j
 @Controller
 public class HomeController {
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private LocalsubService service;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);

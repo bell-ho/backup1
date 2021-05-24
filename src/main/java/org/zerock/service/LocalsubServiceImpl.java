@@ -1,7 +1,6 @@
 package org.zerock.service;
 
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,19 +13,19 @@ import java.util.List;
 @Service
 public class LocalsubServiceImpl implements LocalsubService {
 
-    @Setter(onMethod_=@Autowired)
-    private LocalsubMapper mapper;
+    @Autowired
+    private LocalsubMapper localsubMapper;
 
     @Override
     public List<LocalsubVO> list() {
         // TODO Auto-generated method stub
         log.info("Test");
-        return mapper.list();
+        return localsubMapper.list();
     }
 
     @Override
     public LocalsubVO getTest(String name) {
         log.info("get");
-        return mapper.getTest(name);
+        return localsubMapper.getTest(name);
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Log4j
 public class EmailController {
-    @Setter(onMethod_ = @Autowired)
+    @Autowired
     private MailSender mailSender;
 
     public void setJavaMailSender(MailSender mailSender) {
