@@ -51,7 +51,7 @@ if (ServletFileUpload.isMultipartContent(request)){
                 ///////////////// 서버에 파일쓰기 /////////////////
                 InputStream is = item.getInputStream();
                 OutputStream os=new FileOutputStream(path + realname);
-                System.out.println(path + realname);
+                System.out.println("path + realname : "+path + realname);
                 int numRead;
                 byte b[] = new byte[(int)item.getSize()];
                 while((numRead = is.read(b,0,b.length)) != -1){
@@ -62,8 +62,10 @@ if (ServletFileUpload.isMultipartContent(request)){
                 os.close();
                 ///////////////// 서버에 파일쓰기 /////////////////
                 int port = request.getServerPort();
+                System.out.println("port: "+port);
+//                return3 += "&bNewLine=true&sFileName="+name+"&sFileURL=http://localhost:8081/"+viewPath+realname;
                 return3 += "&bNewLine=true&sFileName="+name+"&sFileURL=http://localhost:"+port+"/"+viewPath+realname;
-                System.out.println(realname);
+                System.out.println("realname : "+realname);
             }else {
                 return3 += "&errstr=error";
             }
