@@ -25,8 +25,10 @@
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
         <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
-        <property name="username" value="c##test"/>
-        <property name="password" value="c##test"/>
+<!--        <property name="username" value="c##test"/>-->
+<!--        <property name="password" value="c##test"/>-->
+        <property name="username" value="c##jh"/>
+        <property name="password" value="c##jh"/>
     </bean>
 
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">

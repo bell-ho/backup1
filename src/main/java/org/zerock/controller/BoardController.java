@@ -1,8 +1,7 @@
 package org.zerock.controller;
 
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +27,11 @@ import java.util.regex.Pattern;
 @Controller
 @Log4j
 @RequestMapping("/board/*")
-
+@RequiredArgsConstructor
 public class BoardController {
 
-    @Autowired
-    private BoardService boardService;
-
-    @Autowired
-    private UploadFileService uploadFileService;
+    private final BoardService boardService;
+    private final UploadFileService uploadFileService;
 
     @GetMapping("/listFreeBoard") // 자유게시판
     public void Freelist(Model model) {

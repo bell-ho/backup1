@@ -7,30 +7,63 @@
 
     <!-- 자유게시판 -->
     <select id="getFreeList" resultType="org.zerock.domain.BoardVO">
+        /*mapper.boardGetFreeList*/
 	<![CDATA[
-        select board_No , board_Title , board_Content,  m.mem_Id , m.mem_Nickname , board_Hit , board_Regdate , board_Replycnt
-        from board b , member m
-        where board_Kinds = 1 and m.mem_Id = b.mem_Id and board_No > 0
+        select board_No,
+               board_Title,
+               board_Content,
+               m.mem_Id,
+               m.mem_Nickname,
+               board_Hit,
+               board_Regdate,
+               board_Replycnt
+        from board b,
+             member m
+        where board_Kinds = 1
+          and m.mem_Id = b.mem_Id
+          and board_No > 0
         ]]>
-	</select>
+    </select>
 
     <!-- 후기게시판 -->
     <select id="getTripList" resultType="org.zerock.domain.BoardVO">
+        /*mapper.boardGetTripList*/
 	<![CDATA[
-        select board_No , board_Title , board_Content, m.mem_Id , mem_Nickname , board_Hit , board_Regdate , board_Replycnt
-        from board b , member m
-        where m.mem_Id = b.mem_Id and board_Kinds = 0 and board_No > 0
+        select board_No,
+               board_Title,
+               board_Content,
+               m.mem_Id,
+               mem_Nickname,
+               board_Hit,
+               board_Regdate,
+               board_Replycnt
+        from board b,
+             member m
+        where m.mem_Id = b.mem_Id
+          and board_Kinds = 0
+          and board_No > 0
         ]]>
-	</select>
+    </select>
 
     <!-- 내가 쓴글 게시판 -->
     <select id="getMyList" resultType="org.zerock.domain.BoardVO">
+        /*mapper.boardGetMyList*/
 	<![CDATA[
-        select board_No , board_Title , board_Content, m.mem_Id , mem_Nickname , board_Hit , board_Regdate , board_Replycnt
-        from board b , member m
-        where m.mem_Id = b.mem_Id and m.mem_Nickname=#{memNickname} and board_No > 0
+        select board_No,
+               board_Title,
+               board_Content,
+               m.mem_Id,
+               mem_Nickname,
+               board_Hit,
+               board_Regdate,
+               board_Replycnt
+        from board b,
+             member m
+        where m.mem_Id = b.mem_Id
+          and m.mem_Nickname = #{memNickname}
+          and board_No > 0
         ]]>
-	</select>
+    </select>
 
     <insert id="insertSelectkey">
 
@@ -58,35 +91,48 @@
     </insert>
 
     <select id="read" resultType="org.zerock.domain.BoardVO">
-        select * from board b , member m
-        where b.mem_Id = m.mem_Id and board_No = #{boardNo}
+        /*mapper.boardRead*/
+        select *
+        from board b,
+             member m
+        where b.mem_Id = m.mem_Id
+          and board_No = #{boardNo}
     </select>
 
     <delete id="delete">
-        delete from board where board_No = #{boardNo}
+        /*mapper.boardDelete*/
+        delete
+        from board
+        where board_No = #{boardNo}
     </delete>
 
     <update id="update">
-        update board set
-                         board_Kinds = #{boardKinds},
-                         board_Title = #{boardTitle},
-                         board_Content = #{boardContent},
-                         board_Updatedate = sysdate
+        /*mapper.boardUpdate*/
+        update board
+        set board_Kinds      = #{boardKinds},
+            board_Title      = #{boardTitle},
+            board_Content    = #{boardContent},
+            board_Updatedate = sysdate
         where board_No = #{boardNo}
     </update>
 
     <update id="updateReplyCnt">
-        update board set
-            board_Replycnt = board_Replycnt + #{amount}
+        update board
+        set board_Replycnt = board_Replycnt + #{amount}
         where board_No = #{boardNo}
     </update>
 
     <delete id="deleteMember">
-        delete from board where mem_Id = #{memId}
+        /*mapper.boardListAllDelete of Member*/
+        delete
+        from board
+        where mem_Id = #{memId}
     </delete>
 
     <update id="updateBoardhit" parameterType="Long">
-        update board set board_Hit = board_Hit +1 where board_No = #{boardNo}
+        update board
+        set board_Hit = board_Hit + 1
+        where board_No = #{boardNo}
     </update>
 
 </mapper>

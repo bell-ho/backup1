@@ -6,8 +6,9 @@
 <mapper namespace="org.zerock.mapper.UploadFileMapper">
 
     <insert id="insert">
+        /*mapper.uploadFileInsert*/
         insert into uploadfile
-        values(seq_uploadfile.nextval , #{boardNo} , #{fileName} , #{memId} )
+        values (seq_uploadfile.nextval, #{boardNo}, #{fileName}, #{memId})
     </insert>
 
     <select id="getTripList" resultType="org.zerock.domain.UploadFileVO">
@@ -69,12 +70,12 @@
     <select id="totalTrip" resultType="int">
         select count(*)
         from
-             uploadfile f , board b
+        uploadfile f , board b
         where
-              b.board_No = f.board_No
-          and
-              b.board_Content like '%'||#{key}||'%'
-          and b.board_Title
+        b.board_No = f.board_No
+        and
+        b.board_Content like '%'||#{key}||'%'
+        and b.board_Title
 
         like '%'||#{key}||'%'
         <if test="keyword != ''">
@@ -84,13 +85,18 @@
     </select>
 
     <delete id="deleteFileAll">
-        delete from uploadfile where board_No = #{boardNo}
+        delete
+        from uploadfile
+        where board_No = #{boardNo}
     </delete>
     <select id="get" resultType="org.zerock.domain.UploadFileVO">
-        select * from uploadfile
+        select *
+        from uploadfile
     </select>
     <delete id="deleteMember">
-        delete from uploadfile where mem_Id = #{memId}
+        delete
+        from uploadfile
+        where mem_Id = #{memId}
     </delete>
 
 </mapper>
