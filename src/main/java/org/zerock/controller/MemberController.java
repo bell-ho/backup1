@@ -194,6 +194,7 @@ public class MemberController {
 
     @GetMapping("/myStat")
     public void myStat(Principal principal, Model model) {
+
         model.addAttribute("member", service.get(principal.getName()));
         model.addAttribute("stat", statService.stat(service.get(principal.getName())));
     }
