@@ -79,7 +79,7 @@ $(document).ready(function() {
                      <a class ="page-link"href="${pageMaker.endPage +1 }">Next</a></li>
                   </c:if>
 			</ul>
-			<form id='searchForm' action="/photoAll" = method="get">
+			<form id='searchForm' action="/photoAll" method="get">
 				<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>' /> 
 				<input type='hidden' name='pageNum' value="${pageMaker.cri.pageNum }">
 				<input type='hidden' name='amount' value="${pageMaker.cri.amount }">

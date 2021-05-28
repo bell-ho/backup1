@@ -1,8 +1,8 @@
 package org.zerock.controller;
 
 import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,19 +11,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.zerock.domain.MemberVO;
+import org.zerock.domain.StatVO;
 import org.zerock.service.MemberService;
+import org.zerock.service.StatService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @Log4j
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
-    @Autowired
-    private MemberService service;
+
+    private final MemberService service;
+    private final StatService statService;
 
     @PostMapping("/insertMember")
     public String insertMember(MemberVO vo, MultipartHttpServletRequest mut, HttpServletRequest request) throws IOException {
@@ -184,5 +189,12 @@ public class MemberController {
 
         model.addAttribute("result", "success");
         return "redirect:main";
+    }
+
+
+    @GetMapping("/myStat")
+    public void myStat(Principal principal, Model model) {
+        model.addAttribute("member", service.get(principal.getName()));
+        model.addAttribute("stat", statService.stat(service.get(principal.getName())));
     }
 }

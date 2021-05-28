@@ -10,6 +10,7 @@
 <%@ page import="org.apache.commons.fileupload.FileItem" %>
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
+<%@ page import="java.net.URLEncoder" %>
 
 <%
     String return1 = "";
@@ -72,5 +73,6 @@
             }
         }
     }
+//    response.sendRedirect(URLEncoder.encode(return1 + return2 + return3, "UTF-8"));
     response.sendRedirect(return1 + return2 + return3);
 %>

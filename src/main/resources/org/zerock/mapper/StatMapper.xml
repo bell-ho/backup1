@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.StatMapper">
+
+    <select id="myStat" resultType="org.zerock.domain.StatVO">
+        SELECT b.MEM_ID                                                                           AS memID,
+               (SELECT COUNT(BOARD_NO) FROM BOARD WHERE MEM_ID = #{memId})                        AS totNumBoard,
+               (SELECT COUNT(REPLY_NO) FROM REPLY WHERE MEM_ID = #{memId})                        AS totNumReply,
+               (SELECT SUM(BOARD_HIT) FROM BOARD WHERE MEM_ID = #{memId})                         AS totBoardHit,
+               (SELECT BOARD_HIT FROM BOARD WHERE BOARD_HIT = (SELECT MAX(BOARD_HIT) FROM BOARD)) AS maxBoardHit,
+               (SELECT BOARD_NO FROM board WHERE BOARD_HIT = (SELECT MAX(BOARD_HIT) FROM BOARD))  AS maxBoardHitNum
+        FROM BOARD b
+        GROUP BY b.MEM_ID
+    </select>
+</mapper>

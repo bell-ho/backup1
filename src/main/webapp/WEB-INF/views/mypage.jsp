@@ -98,6 +98,7 @@ $(document).ready(function(){
 				<a href="/memberUpdatePassword" class="list-group-item">비밀번호 변경 </a>
 				<a href="/memberDelete" class="list-group-item ">회원 탈퇴</a>
 				<a href="/"	class="list-group-item">홈으로</a>
+				<a href="/myStat"	class="list-group-item">내 통계</a>
 			</div>
 		</div>
 		<!-- /.col-lg-3 -->
